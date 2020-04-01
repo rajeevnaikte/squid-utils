@@ -1,7 +1,7 @@
 {
-  "name": "node-template",
+  "name": "squid-utils",
   "version": "1.0.0",
-  "description": "Template repo for NodeJS projects",
+  "description": "Utility functions",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -15,17 +15,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rajeevnaikte/node-template.git"
+    "url": "git+https://github.com/rajeevnaikte/squid-utils.git"
   },
   "keywords": [
-    "template"
+    "utils",
+    "lodash"
   ],
   "author": "Rajeev N",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rajeevnaikte/node-template/issues"
+    "url": "https://github.com/rajeevnaikte/squid-utils/issues"
   },
-  "homepage": "https://github.com/rajeevnaikte/node-template#readme",
+  "homepage": "https://github.com/rajeevnaikte/squid-utils#readme",
   "dependencies": {},
   "devDependencies": {
     "@types/jest": "^25.1.2",

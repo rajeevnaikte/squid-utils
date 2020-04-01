@@ -1,2 +1,2 @@
-# node-template
-Template repo for NodeJS projects
+# squid-utils
+Utility functions
