@@ -69,11 +69,24 @@ const getOrSetDefault = <T, K>(map: Map<T, K>, key: T, defaultValue: K): K => {
   return defaultValue;
 };
 
+/**
+ * Get map value for the key. If not exists then call the function. and return its value if any.
+ * @param map
+ * @param key
+ * @param onNotExist
+ */
+const getOrCall = <T, K, R>(map: Map<T, K>, key: T, onNotExist: () => R): K | R => {
+  const value = map.get(key);
+  if (value) return value;
+  return onNotExist();
+}
+
 export {
   getNonNull,
   toNumOrString,
   getKeysArray,
   getValuesArray,
   includesI,
-  getOrSetDefault
+  getOrSetDefault,
+  getOrCall
 }

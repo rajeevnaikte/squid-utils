@@ -1,4 +1,11 @@
-import { getKeysArray, getNonNull, getOrSetDefault, getValuesArray, includesI, toNumOrString } from '../utils';
+import {
+  getKeysArray,
+  getNonNull,
+  getOrSetDefault, getOrCall,
+  getValuesArray,
+  includesI,
+  toNumOrString
+} from '../utils';
 import { NullObjectError } from '../errors';
 
 describe('Utility', () => {
@@ -50,5 +57,10 @@ describe('Utility', () => {
 
     key1Val.push('val1');
     expect(getOrSetDefault(map, 'key1', [])).toStrictEqual(['val1']);
+  });
+
+  test('getOrCall', () => {
+    expect(() => getOrCall(new Map(), '', () => { throw new NullObjectError() }))
+      .toThrow(new NullObjectError());
   });
 });
