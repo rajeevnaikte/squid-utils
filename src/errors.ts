@@ -1,4 +1,4 @@
-export default class BaseError extends Error {
+export class BaseError extends Error {
   readonly code: string;
 
   constructor (code: string, message: string) {
