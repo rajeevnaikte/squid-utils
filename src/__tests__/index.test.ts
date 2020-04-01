@@ -1,4 +1,4 @@
-import { getKeysArray, getNonNull, getValuesArray, includesI, toNumOrString } from '../index';
+import { getKeysArray, getNonNull, getOrSetDefault, getValuesArray, includesI, toNumOrString } from '../index';
 import { NullObjectError } from '../errors';
 
 describe('Utility', () => {
@@ -35,11 +35,20 @@ describe('Utility', () => {
     expect(getValuesArray(map)).toStrictEqual([1, 'b', false]);
   });
 
-  test('hasIgnoreCase', () => {
+  test('includesI', () => {
     expect(includesI(['a', 'b'], 'c')).toEqual(false);
     expect(includesI(['a', 'b'], 'b')).toEqual(true);
     expect(includesI(['a', undefined], undefined)).toEqual(true);
     expect(includesI(['a', undefined, null], null)).toEqual(true);
     expect(includesI(['a', undefined], null)).toEqual(true);
+  });
+
+  test('getOrSetDefault', () => {
+    const map = new Map()
+    const key1Val = getOrSetDefault(map, 'key1', []);
+    expect(key1Val).toStrictEqual([]);
+
+    key1Val.push('val1');
+    expect(getOrSetDefault(map, 'key1', [])).toStrictEqual(['val1']);
   });
 });
