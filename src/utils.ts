@@ -5,9 +5,9 @@ import { BaseError, NullObjectError } from './errors';
  * @param object
  */
 const getNonNull = <T, R extends BaseError>(
-  object: T, errorObjectSupplier?: () => R): T => {
+  object: T, errorObjectSupplier?: () => R): NonNullable<T> => {
   if (object !== undefined && object !== null) {
-    return object;
+    return object as NonNullable<T>;
   }
   if (errorObjectSupplier) {
     throw errorObjectSupplier();
