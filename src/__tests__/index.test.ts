@@ -1,4 +1,4 @@
-import { getKeysArray, getNonNull, getOrSetDefault, getValuesArray, includesI, toNumOrString } from '../index';
+import { getKeysArray, getNonNull, getOrSetDefault, getValuesArray, includesI, toNumOrString } from '../utils';
 import { NullObjectError } from '../errors';
 
 describe('Utility', () => {
