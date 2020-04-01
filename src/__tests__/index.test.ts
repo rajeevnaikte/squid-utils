@@ -6,7 +6,7 @@ import {
   includesI,
   toNumOrString
 } from '../utils';
-import { NullObjectError } from '../errors';
+import { BaseError, NullObjectError } from '../errors';
 
 describe('Utility', () => {
   test('getNotNull', () => {
@@ -14,6 +14,8 @@ describe('Utility', () => {
     expect(() => getNonNull(undefined)).toThrow(new NullObjectError());
     expect(getNonNull(0)).toEqual(0);
     expect(getNonNull('')).toEqual('');
+    expect(() => getNonNull(undefined, () => new BaseError('', '')))
+      .toThrow(new BaseError('', ''));
   });
 
   test('toNumOrString', () => {

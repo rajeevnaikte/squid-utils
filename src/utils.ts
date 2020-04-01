@@ -1,12 +1,16 @@
-import { NullObjectError } from './errors';
+import { BaseError, NullObjectError } from './errors';
 
 /**
  * Return same object if not null. Otherwise throw error.
  * @param object
  */
-const getNonNull = <T>(object: T): T => {
+const getNonNull = <T, R extends BaseError>(
+  object: T, errorObjectSupplier?: () => R): T => {
   if (object !== undefined && object !== null) {
     return object;
+  }
+  if (errorObjectSupplier) {
+    throw errorObjectSupplier();
   }
   throw new NullObjectError();
 };
