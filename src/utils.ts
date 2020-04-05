@@ -4,7 +4,7 @@ import { BaseError, NullObjectError } from './errors';
  * Return same object if not null. Otherwise throw error.
  * @param object
  */
-const getNonNull = <T, R extends BaseError>(
+const nonNull = <T, R extends BaseError>(
   object: T, errorObjectSupplier?: () => R): NonNullable<T> => {
   if (object !== undefined && object !== null) {
     return object as NonNullable<T>;
@@ -19,7 +19,7 @@ const getNonNull = <T, R extends BaseError>(
  * If string form of number parse to number or get toString value.
  * @param object
  */
-const toNumOrString = <T>(object: T): string | number => {
+const toNumOrStr = <T>(object: T): string | number => {
   if (isNaN(object as any) || typeof object === 'boolean') {
     return (object as any).toString();
   } else {
@@ -31,7 +31,7 @@ const toNumOrString = <T>(object: T): string | number => {
  * Get all keys of an object or a Map in an array.
  * @param object
  */
-const getKeysArray = (object: { [key: string]: any } | Map<any, any>): any[] => {
+const keys = (object: { [key: string]: any } | Map<any, any>): any[] => {
   if (object instanceof Map) {
     return Array.from(object.keys());
   } else {
@@ -43,7 +43,7 @@ const getKeysArray = (object: { [key: string]: any } | Map<any, any>): any[] => 
  * Get all values of an object or a Map in an array.
  * @param object
  */
-const getValuesArray = (object: { [key: string]: any } | Map<any, any>): any[] => {
+const values = (object: { [key: string]: any } | Map<any, any>): any[] => {
   if (object instanceof Map) {
     return Array.from(object.values());
   } else {
@@ -86,10 +86,10 @@ const getOrCall = <T, K, R>(map: Map<T, K>, key: T, onNotExist: () => R): K | R 
 }
 
 export {
-  getNonNull,
-  toNumOrString,
-  getKeysArray,
-  getValuesArray,
+  nonNull,
+  toNumOrStr,
+  keys,
+  values,
   includesI,
   getOrSetDefault,
   getOrCall

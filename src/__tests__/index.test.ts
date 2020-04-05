@@ -1,47 +1,55 @@
 import {
-  getKeysArray,
-  getNonNull,
+  keys,
+  nonNull,
   getOrSetDefault, getOrCall,
-  getValuesArray,
+  values,
   includesI,
-  toNumOrString
+  toNumOrStr
 } from '../utils';
 import { BaseError, NullObjectError } from '../errors';
+import * as _ from '../index'
+
+_
 
 describe('Utility', () => {
-  test('getNotNull', () => {
-    expect(() => getNonNull(null)).toThrow(new NullObjectError());
-    expect(() => getNonNull(undefined)).toThrow(new NullObjectError());
-    expect(getNonNull(0)).toEqual(0);
-    expect(getNonNull('')).toEqual('');
-    expect(() => getNonNull(undefined, () => new BaseError('', '')))
+  test('nonNull', () => {
+    expect(() => nonNull(null)).toThrow(new NullObjectError());
+    expect(() => nonNull(undefined)).toThrow(new NullObjectError());
+    expect(nonNull(0)).toEqual(0);
+    expect(nonNull('')).toEqual('');
+    expect(() => nonNull(undefined, () => new BaseError('', '')))
       .toThrow(new BaseError('', ''));
   });
 
-  test('toNumOrString', () => {
-    expect(toNumOrString('123')).toEqual(123);
-    expect(toNumOrString('hello')).toEqual('hello');
-    expect(toNumOrString(true)).toEqual('true');
+  test('toNumOrStr', () => {
+    expect(toNumOrStr('123')).toEqual(123);
+    expect(toNumOrStr('hello')).toEqual('hello');
+    expect(toNumOrStr(true)).toEqual('true');
   });
 
-  test('getKeysArray', () => {
-    expect(getKeysArray({ 1: 1, 2: 2 })).toStrictEqual(['1', '2']);
+  test('keys', () => {
+    expect(keys({ 1: 1, 2: 2 })).toStrictEqual(['1', '2']);
 
     const map = new Map();
     map.set(1, 1);
     map.set('a', 'b');
     map.set(true, false);
-    expect(getKeysArray(map)).toStrictEqual([1, 'a', true]);
+    expect(keys(map)).toStrictEqual([1, 'a', true]);
+
+    class Func {
+      readonly a: string = 'b';
+    }
+    expect(keys(new Func())).toStrictEqual(['a']);
   });
 
-  test('getValuesArray', () => {
-    expect(getValuesArray({ 1: 1, 2: 2 })).toStrictEqual([1, 2]);
+  test('values', () => {
+    expect(values({ 1: 1, 2: 2 })).toStrictEqual([1, 2]);
 
     const map = new Map();
     map.set(1, 1);
     map.set('a', 'b');
     map.set(true, false);
-    expect(getValuesArray(map)).toStrictEqual([1, 'b', false]);
+    expect(values(map)).toStrictEqual([1, 'b', false]);
   });
 
   test('includesI', () => {
