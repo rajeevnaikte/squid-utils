@@ -5,7 +5,7 @@ import {
   values,
   includesI,
   toNumOrStr
-} from '../utils';
+} from '../utils/utils';
 import { BaseError, NullObjectError } from '../errors';
 import * as _ from '../index'
 

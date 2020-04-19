@@ -1,7 +1,7 @@
+export type Primitive = string | number | boolean | symbol | null | undefined
+
+export type NonNullPrimitive = string | number | boolean | symbol
+
 export type JsonType = {
-  [key: string]: JsonType |
-    string | number | boolean | symbol |
-    (JsonType | string | number | boolean | symbol)[] |
-    null |
-    undefined;
-} | (JsonType | string | number | boolean | symbol)[]
+  [key: string]: JsonType | Primitive | (JsonType | NonNullPrimitive)[];
+} | (JsonType | NonNullPrimitive)[]

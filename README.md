@@ -12,6 +12,6 @@ Given map or an object return values in an array.
 - includesI(collection, searchString)<br/>
 Search the string in the collection ignoring case.
 - getOrSetDefault(map, key, defaultValue)<br/>
-Get value of key in the map. If not exists, then set the default value in the map for the key and then return the default value.
+Get value of key in the map. If not pathExists, then set the default value in the map for the key and then return the default value.
 - getOrCall(map, key, callbackFn)<br/>
-Get map value for the key. If not exists then call the function. and return its value if any.
+Get map value for the key. If not pathExists then call the function. and return its value if any.

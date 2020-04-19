@@ -1,10 +1,11 @@
-import { BaseError, NullObjectError } from './errors';
+import { BaseError, NullObjectError } from '../errors';
 
 /**
  * Return same object if not null. Otherwise throw error.
  * @param object
+ * @param errorObjectSupplier
  */
-const nonNull = <T, R extends BaseError>(
+export const nonNull = <T, R extends BaseError>(
   object: T, errorObjectSupplier?: () => R): NonNullable<T> => {
   if (object !== undefined && object !== null) {
     return object as NonNullable<T>;
@@ -19,7 +20,7 @@ const nonNull = <T, R extends BaseError>(
  * If string form of number parse to number or get toString value.
  * @param object
  */
-const toNumOrStr = <T>(object: T): string | number => {
+export const toNumOrStr = <T>(object: T): string | number => {
   if (isNaN(object as any) || typeof object === 'boolean') {
     return (object as any).toString();
   } else {
@@ -31,7 +32,7 @@ const toNumOrStr = <T>(object: T): string | number => {
  * Get all keys of an object or a Map in an array.
  * @param object
  */
-const keys = (object: { [key: string]: any } | Map<any, any>): any[] => {
+export const keys = (object: { [key: string]: any } | Map<any, any>): any[] => {
   if (object instanceof Map) {
     return Array.from(object.keys());
   } else {
@@ -43,7 +44,7 @@ const keys = (object: { [key: string]: any } | Map<any, any>): any[] => {
  * Get all values of an object or a Map in an array.
  * @param object
  */
-const values = (object: { [key: string]: any } | Map<any, any>): any[] => {
+export const values = (object: { [key: string]: any } | Map<any, any>): any[] => {
   if (object instanceof Map) {
     return Array.from(object.values());
   } else {
@@ -56,17 +57,17 @@ const values = (object: { [key: string]: any } | Map<any, any>): any[] => {
  * @param collection
  * @param searchString
  */
-const includesI = (collection: (string | null | undefined)[], searchString: string | null | undefined): boolean => {
+export const includesI = (collection: (string | null | undefined)[], searchString: string | null | undefined): boolean => {
   return collection.map(item => item?.toLowerCase()).includes(searchString?.toLowerCase());
 };
 
 /**
- * Get map value for the key. If not exists then set into the map with defaultValue and return the defaultValue.
+ * Get map value for the key. If not pathExists then set into the map with defaultValue and return the defaultValue.
  * @param map
  * @param key
  * @param defaultValue
  */
-const getOrSetDefault = <T, K>(map: Map<T, K>, key: T, defaultValue: K): K => {
+export const getOrSetDefault = <T, K>(map: Map<T, K>, key: T, defaultValue: K): K => {
   const value = map.get(key);
   if (value) return value;
   map.set(key, defaultValue);
@@ -74,23 +75,13 @@ const getOrSetDefault = <T, K>(map: Map<T, K>, key: T, defaultValue: K): K => {
 };
 
 /**
- * Get map value for the key. If not exists then call the function. and return its value if any.
+ * Get map value for the key. If not pathExists then call the function. and return its value if any.
  * @param map
  * @param key
  * @param onNotExist
  */
-const getOrCall = <T, K, R>(map: Map<T, K>, key: T, onNotExist: () => R): K | R => {
+export const getOrCall = <T, K, R>(map: Map<T, K>, key: T, onNotExist: () => R): K | R => {
   const value = map.get(key);
   if (value) return value;
   return onNotExist();
-}
-
-export {
-  nonNull,
-  toNumOrStr,
-  keys,
-  values,
-  includesI,
-  getOrSetDefault,
-  getOrCall
-}
+};
