@@ -12,7 +12,13 @@ export const safeRegex = (text: string): string => {
     .join('][')}]`;
 };
 
-const textsBetweenRegex = (start: string, end: string, escapeChar = '\\'): RegExp => {
+/**
+ * Regex to find text enclosed between given start and end characters.
+ * @param start
+ * @param end
+ * @param escapeChar
+ */
+export const textsBetweenRegex = (start: string, end: string, escapeChar = '\\'): RegExp => {
   const startRegex = safeRegex(start);
   const endRegex = safeRegex(end);
   const escapeCharRegex = safeRegex(escapeChar);
