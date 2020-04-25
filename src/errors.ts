@@ -70,3 +70,9 @@ export class InvalidDirPath extends BaseError {
     super('INVALID_DIR_PATH', `Path ${filePath} is not pointing to a valid directory.`);
   }
 }
+
+export class TextsBetweenNoStartEnd extends BaseError {
+  constructor () {
+    super('TEXTS_BETWEEN_NO_START_END', 'Must pass start and end charecter(s) to extract the enclosed text(s).');
+  }
+}
