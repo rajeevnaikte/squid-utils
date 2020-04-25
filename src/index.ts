@@ -3,3 +3,4 @@ export * from './utils/syncFileUtils';
 export * from './errors';
 export * from './types';
 export * from './utils/textParsers';
+export * from './utils/TextsBetween';
