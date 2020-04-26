@@ -147,7 +147,7 @@ const walkPath = (rootDir: string,
   if (opts?.fileNameMatcher) {
     filePaths = filePaths.filter(filePath => {
       if (opts.fileNameMatcher instanceof RegExp) {
-        return opts.fileNameMatcher.test(filePath);
+        return filePath.match(opts.fileNameMatcher) !== null;
       }
       else {
         // eslint-disable-next-line @typescript-eslint/ban-ts-ignore

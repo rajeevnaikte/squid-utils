@@ -3,7 +3,8 @@ import {
   isDirectory,
   readFile,
   readJson,
-  walkDirTree, writeFile,
+  walkDirTree,
+  writeFile,
   writeJson
 } from '../utils/syncFileUtils';
 import { InvalidJsonFormat, PathNotFound } from '../errors';
@@ -51,6 +52,18 @@ describe('syncFileUtils', () => {
   test('walkDirTree', () => {
     const dirPath = `${__dirname}/data/walk`;
     expect(walkDirTree(dirPath, { recursive: true }))
+      .toEqual([
+        `${dirPath}/empty`,
+        `${dirPath}/subdir/empty`
+      ]);
+  });
+
+  test('walkDirTree with filename filter', () => {
+    const dirPath = `${__dirname}/data/walk`;
+    expect(walkDirTree(dirPath, {
+      fileNameMatcher: /ty$/g,
+      recursive: true
+    }))
       .toEqual([
         `${dirPath}/empty`,
         `${dirPath}/subdir/empty`
