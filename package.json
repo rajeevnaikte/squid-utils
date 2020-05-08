@@ -2,10 +2,10 @@
   "name": "squid-utils",
   "version": "2.0.0",
   "description": "Utility functions",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "lib/**/*"
+    "dist/**/*"
   ],
   "scripts": {
     "lint": "eslint 'src/**/*.{ts,js}'",
