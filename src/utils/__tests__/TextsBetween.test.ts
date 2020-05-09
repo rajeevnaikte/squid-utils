@@ -1,5 +1,5 @@
-import { JsonType, TextsBetweenNoStartEnd } from '..';
-import { TextsBetween } from '../utils/TextsBetween';
+import { JsonType, TextsBetweenNoStartEnd } from '../../index';
+import { TextsBetween } from '../TextsBetween';
 
 describe('text between', () => {
   describe('get', () => {

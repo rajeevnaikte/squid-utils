@@ -1,4 +1,4 @@
-import { safeRegex } from '../utils/textParsers';
+import { safeRegex } from '../textParsers';
 
 describe('text parsers', () => {
   describe('safeRegex', () => {

@@ -1,15 +1,8 @@
-import {
-  keys,
-  nonNull,
-  getOrSetDefault, getOrCall,
-  values,
-  includesI,
-  toNumOrStr
-} from '../utils/utils';
-import { BaseError, NullObjectError } from '../errors';
-import * as _ from '../index'
+import { getOrCall, getOrSetDefault, includesI, keys, nonNull, toNumOrStr, values } from '../utils';
+import { BaseError, NullObjectError } from '../../errors';
+import * as _ from '../../index';
 
-_
+_;
 
 describe('Utility', () => {
   test('nonNull', () => {
