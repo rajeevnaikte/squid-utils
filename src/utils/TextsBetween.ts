@@ -37,10 +37,10 @@ export class TextsBetween {
     const startRegex = safeRegex(start);
     const endRegex = safeRegex(end);
     const escapeCharRegex = safeRegex(escapeChar);
-    this.forSplit = new RegExp(`((?<!${escapeCharRegex})${startRegex}(?:(?!${startRegex}|${endRegex}).)+(?<!${escapeCharRegex})${endRegex})`, 'i');
-    this.forExtract = new RegExp(`(?<!${escapeCharRegex})${startRegex}(((?!${startRegex}|${endRegex}).)+)(?<!${escapeCharRegex})${endRegex}`, 'ig');
-    this.escapedStartRegex = new RegExp(`${escapeCharRegex}${startRegex}`, 'ig');
-    this.escapedEndRegex = new RegExp(`${escapeCharRegex}${endRegex}`, 'ig');
+    this.forSplit = new RegExp(`((?<!${escapeCharRegex})${startRegex}(?:(?:(?!${startRegex}|${endRegex}).|\\n)+)?(?<!${escapeCharRegex})${endRegex})`, 'im');
+    this.forExtract = new RegExp(`(?<!${escapeCharRegex})${startRegex}((((?!${startRegex}|${endRegex}).)|\\n)*)(?<!${escapeCharRegex})${endRegex}`, 'igm');
+    this.escapedStartRegex = new RegExp(`${escapeCharRegex}${startRegex}`, 'igm');
+    this.escapedEndRegex = new RegExp(`${escapeCharRegex}${endRegex}`, 'igm');
   }
 
   /**

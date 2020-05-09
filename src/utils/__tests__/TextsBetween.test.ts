@@ -54,6 +54,30 @@ describe('text between', () => {
       const actual = textsBetween.get('${hello} world');
       expect(actual).toEqual(['hello']);
     });
+
+    test('empty text between', () => {
+      const textsBetween = new TextsBetween('[', ']');
+      const actual = textsBetween.get('[] w [hello] w');
+      expect(actual).toEqual(['', 'hello']);
+    });
+
+    test('1 char between', () => {
+      const textsBetween = new TextsBetween('[', ']');
+      const actual = textsBetween.get('[x] w [hello] w');
+      expect(actual).toEqual(['x', 'hello']);
+    });
+
+    test('2 char between', () => {
+      const textsBetween = new TextsBetween('[', ']');
+      const actual = textsBetween.get('[xx] w [hello] w');
+      expect(actual).toEqual(['xx', 'hello']);
+    });
+
+    test('multi-line', () => {
+      const textsBetween = new TextsBetween('[', ']');
+      const actual = textsBetween.get('\n[hello] \n wo[\n]d');
+      expect(actual).toEqual(['hello', '\n']);
+    });
   });
 
   describe('split', () => {
@@ -77,6 +101,51 @@ describe('text between', () => {
         { textBetween: 'world' }
       ]);
     });
+
+    test('empty text between', () => {
+      const textsBetween = new TextsBetween('[', ']');
+      const actual = textsBetween.split('[] w [hello] w');
+      expect(actual).toEqual([
+        { textBetween: '' },
+        ' w ',
+        { textBetween: 'hello' },
+        ' w'
+      ]);
+    });
+
+    test('1 char between', () => {
+      const textsBetween = new TextsBetween('[', ']');
+      const actual = textsBetween.split('[x] w [hello] w');
+      expect(actual).toEqual([
+        { textBetween: 'x' },
+        ' w ',
+        { textBetween: 'hello' },
+        ' w'
+      ]);
+    });
+
+    test('2 char between', () => {
+      const textsBetween = new TextsBetween('[', ']');
+      const actual = textsBetween.split('[xx] w [hello] w');
+      expect(actual).toEqual([
+        { textBetween: 'xx' },
+        ' w ',
+        { textBetween: 'hello' },
+        ' w'
+      ]);
+    });
+
+    test('multi-line', () => {
+      const textsBetween = new TextsBetween('[', ']');
+      const actual = textsBetween.split('\n[hello] \n wo[\n]d');
+      expect(actual).toEqual([
+        '\n',
+        { textBetween: 'hello' },
+        ' \n wo',
+        { textBetween: '\n' },
+        'd'
+      ]);
+    });
   });
 
   describe('replace', () => {
@@ -98,6 +167,49 @@ describe('text between', () => {
       const textsBetween = new TextsBetween('[', ']');
       const actual = textsBetween.replace('[var] hello [my\\][world]', textBetween => data[textBetween] as string);
       expect(actual).toEqual('1 hello [my]earth');
+    });
+
+    test('empty text between', () => {
+      const data: JsonType = {
+        var: 1,
+        hello: 'earth',
+        '': 'empty'
+      };
+      const textsBetween = new TextsBetween('[', ']');
+      const actual = textsBetween.replace('[] w [hello] w', textBetween => data[textBetween] as string);
+      expect(actual).toEqual('empty w earth w');
+    });
+
+    test('1 char between', () => {
+      const data: JsonType = {
+        var: 1,
+        hello: 'earth',
+        'x': 'empty'
+      };
+      const textsBetween = new TextsBetween('[', ']');
+      const actual = textsBetween.replace('[x] w [hello] w', textBetween => data[textBetween] as string);
+      expect(actual).toEqual('empty w earth w');
+    });
+
+    test('2 char between', () => {
+      const data: JsonType = {
+        var: 1,
+        hello: 'earth',
+        'xx': 'empty'
+      };
+      const textsBetween = new TextsBetween('[', ']');
+      const actual = textsBetween.replace('[xx] w [hello] w', textBetween => data[textBetween] as string);
+      expect(actual).toEqual('empty w earth w');
+    });
+
+    test('multi-line', () => {
+      const data: JsonType = {
+        hello: 'earth',
+        '\n': ' newline '
+      };
+      const textsBetween = new TextsBetween('[', ']');
+      const actual = textsBetween.replace('\n[hello] \n wo[\n]d', textBetween => data[textBetween] as string);
+      expect(actual).toEqual('\nearth \n wo newline d');
     });
   });
 });
