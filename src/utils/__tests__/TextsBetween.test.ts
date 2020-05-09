@@ -85,10 +85,10 @@ describe('text between', () => {
       const textsBetween = new TextsBetween('[', ']');
       const actual = textsBetween.split('[var] hello [my][world]');
       expect(actual).toEqual([
-        { textBetween: 'var' },
+        { text: '[var]', textBetween: 'var' },
         ' hello ',
-        { textBetween: 'my' },
-        { textBetween: 'world' }
+        { text: '[my]', textBetween: 'my' },
+        { text: '[world]', textBetween: 'world' }
       ]);
     });
 
@@ -96,9 +96,9 @@ describe('text between', () => {
       const textsBetween = new TextsBetween('[', ']');
       const actual = textsBetween.split('[var] hello [my\\][world]');
       expect(actual).toEqual([
-        { textBetween: 'var' },
+        { text: '[var]', textBetween: 'var' },
         ' hello [my]',
-        { textBetween: 'world' }
+        { text: '[world]', textBetween: 'world' }
       ]);
     });
 
@@ -106,9 +106,9 @@ describe('text between', () => {
       const textsBetween = new TextsBetween('[', ']');
       const actual = textsBetween.split('[] w [hello] w');
       expect(actual).toEqual([
-        { textBetween: '' },
+        { text: '[]', textBetween: '' },
         ' w ',
-        { textBetween: 'hello' },
+        { text: '[hello]', textBetween: 'hello' },
         ' w'
       ]);
     });
@@ -117,9 +117,9 @@ describe('text between', () => {
       const textsBetween = new TextsBetween('[', ']');
       const actual = textsBetween.split('[x] w [hello] w');
       expect(actual).toEqual([
-        { textBetween: 'x' },
+        { text: '[x]', textBetween: 'x' },
         ' w ',
-        { textBetween: 'hello' },
+        { text: '[hello]', textBetween: 'hello' },
         ' w'
       ]);
     });
@@ -128,9 +128,9 @@ describe('text between', () => {
       const textsBetween = new TextsBetween('[', ']');
       const actual = textsBetween.split('[xx] w [hello] w');
       expect(actual).toEqual([
-        { textBetween: 'xx' },
+        { text: '[xx]', textBetween: 'xx' },
         ' w ',
-        { textBetween: 'hello' },
+        { text: '[hello]', textBetween: 'hello' },
         ' w'
       ]);
     });
@@ -140,9 +140,9 @@ describe('text between', () => {
       const actual = textsBetween.split('\n[hello] \n wo[\n]d');
       expect(actual).toEqual([
         '\n',
-        { textBetween: 'hello' },
+        { text: '[hello]', textBetween: 'hello' },
         ' \n wo',
-        { textBetween: '\n' },
+        { text: '[\n]', textBetween: '\n' },
         'd'
       ]);
     });

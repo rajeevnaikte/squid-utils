@@ -2,6 +2,7 @@ import { safeRegex } from './textParsers';
 import { TextsBetweenNoStartEnd } from '../errors';
 
 export type TextBetween = {
+  text: string;
   textBetween: string;
 }
 
@@ -77,6 +78,7 @@ export class TextsBetween {
   split (text: string): (string | TextBetween)[] {
     return text.split(this.forSplit)
       .map((part, idx) => idx % 2 === 0 ? this.removeEscapes(part) : {
+        text: part,
         textBetween: this.trimStartEnd(part)
       })
       .filter(part => part);
