@@ -4,9 +4,17 @@
  * @param configs
  */
 export const loadConfigs = <T>(configs: T): T => {
-  const envValues = Object.keys(configs).filter(key => process.env[key])
+  const envValues = Object.keys(configs)
     .reduce((map: any, key) => {
-      map[key] = process.env[key];
+      const envVal = process.env[key];
+      if (envVal) {
+        if (['boolean', 'number', 'object'].includes(typeof (configs as any)[key])) {
+          map[key] = JSON.parse(envVal);
+        }
+        else {
+          map[key] = process.env[key];
+        }
+      }
       return map;
     }, {});
   Object.assign(configs, envValues);
