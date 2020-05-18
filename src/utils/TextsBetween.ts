@@ -29,7 +29,7 @@ export class TextsBetween {
   /**
    * Builder class to build an instance of `TextsBetween` with required and optional properties.
    */
-  static Builder = class {
+  static Builder = class Builder {
     readonly start: string;
     readonly end: string;
     escapeChar = '\\';
@@ -50,7 +50,7 @@ export class TextsBetween {
      * Optionally provide custom escape char to use inside the texts between start and end.
      * @param escapeChar - Default is `\`.
      */
-    withEscapeChar (escapeChar: string) {
+    withEscapeChar (escapeChar: string): Builder {
       this.escapeChar = escapeChar;
       return this;
     }
@@ -59,7 +59,7 @@ export class TextsBetween {
      * Allow nested start end symbols to indicate nested variables. i.e. variable inside variable.
      * E.g. [i18n:Hello [name], welcome!]
      */
-    withNestedAllowed () {
+    withNestedAllowed (): Builder {
       if (this.start === this.end) {
         throw new NestedTextsBetweenNotAllowed();
       }
@@ -70,7 +70,7 @@ export class TextsBetween {
     /**
      * Ignore if there is start symbol near end of the text without a following end symbol.
      */
-    withStaleStartIgnored () {
+    withStaleStartIgnored (): Builder {
       this.ignoreStaleStart = true;
       return this;
     }
