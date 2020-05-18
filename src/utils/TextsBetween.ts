@@ -6,6 +6,61 @@ export type TextBetween = {
   textBetween: string;
 }
 
+class Builder {
+  readonly start: string;
+  readonly end: string;
+  escapeChar = '\\';
+  allowNested = false;
+  ignoreStaleStart = false;
+
+  /**
+   * Start and end char(s) are required to fetch texts between.
+   * @param start
+   * @param end
+   */
+  constructor (start: string, end: string) {
+    this.start = start;
+    this.end = end;
+  }
+
+  /**
+   * Optionally provide custom escape char to use inside the texts between start and end.
+   * @param escapeChar - Default is `\`.
+   */
+  withEscapeChar (escapeChar: string): Builder {
+    this.escapeChar = escapeChar;
+    return this;
+  }
+
+  /**
+   * Allow nested start end symbols to indicate nested variables. i.e. variable inside variable.
+   * E.g. [i18n:Hello [name], welcome!]
+   */
+  withNestedAllowed (): Builder {
+    if (this.start === this.end) {
+      throw new NestedTextsBetweenNotAllowed();
+    }
+    this.allowNested = true;
+    return this;
+  }
+
+  /**
+   * Ignore if there is start symbol near end of the text without a following end symbol.
+   */
+  withStaleStartIgnored (): Builder {
+    this.ignoreStaleStart = true;
+    return this;
+  }
+
+  /**
+   * Get an instance of `TextsBetween`.
+   */
+  build (): TextsBetween {
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    return new TextsBetween(this.start, this.end, this.escapeChar, this.allowNested, this.ignoreStaleStart);
+  }
+}
+
 /**
  * To work with text pattern with some texts enclosed within some characters.
  * e.g. <div><span>[name]</span><label>[title]</label></div>, this html has two texts in enclosed within square brackets.
@@ -29,59 +84,7 @@ export class TextsBetween {
   /**
    * Builder class to build an instance of `TextsBetween` with required and optional properties.
    */
-  static Builder = class Builder {
-    readonly start: string;
-    readonly end: string;
-    escapeChar = '\\';
-    allowNested = false;
-    ignoreStaleStart = false;
-
-    /**
-     * Start and end char(s) are required to fetch texts between.
-     * @param start
-     * @param end
-     */
-    constructor (start: string, end: string) {
-      this.start = start;
-      this.end = end;
-    }
-
-    /**
-     * Optionally provide custom escape char to use inside the texts between start and end.
-     * @param escapeChar - Default is `\`.
-     */
-    withEscapeChar (escapeChar: string): Builder {
-      this.escapeChar = escapeChar;
-      return this;
-    }
-
-    /**
-     * Allow nested start end symbols to indicate nested variables. i.e. variable inside variable.
-     * E.g. [i18n:Hello [name], welcome!]
-     */
-    withNestedAllowed (): Builder {
-      if (this.start === this.end) {
-        throw new NestedTextsBetweenNotAllowed();
-      }
-      this.allowNested = true;
-      return this;
-    }
-
-    /**
-     * Ignore if there is start symbol near end of the text without a following end symbol.
-     */
-    withStaleStartIgnored (): Builder {
-      this.ignoreStaleStart = true;
-      return this;
-    }
-
-    /**
-     * Get an instance of `TextsBetween`.
-     */
-    build (): TextsBetween {
-      return new TextsBetween(this.start, this.end, this.escapeChar, this.allowNested, this.ignoreStaleStart);
-    }
-  };
+  static Builder = Builder;
 
   /**
    * @param start - character or string indicating start of the pattern.
@@ -89,7 +92,7 @@ export class TextsBetween {
    * @param escapeChar - character or string used to escape the start/end symbol
    *  indicating the start/end characters as plain text.
    */
-  private constructor (start: string, end: string, escapeChar = '\\',
+  constructor (start: string, end: string, escapeChar = '\\',
                        allowNested = false, ignoreStaleStart = false) {
     if (start.length === 0 || end.length === 0) throw new TextsBetweenNoStartEnd();
 
