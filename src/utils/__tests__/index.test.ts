@@ -1,4 +1,4 @@
-import { getOrCall, getOrSetDefault, includesI, keys, nonNull, toNumOrStr, values } from '../utils';
+import { getOrCall, getOrSetDefault, includesI, keys, nonNull, proxyObject, toNumOrStr, values } from '../utils';
 import { BaseError, NullObjectError } from '../../errors';
 import * as _ from '../../index';
 
@@ -65,5 +65,28 @@ describe('Utility', () => {
   test('getOrCall', () => {
     expect(() => getOrCall(new Map(), '', () => { throw new NullObjectError() }))
       .toThrow(new NullObjectError());
+  });
+
+  test('proxyObject', () => {
+    let calls: string[] = [];
+    let data = proxyObject(
+      {},
+      (key, prevVal, newVal) => calls.push(`Set ${key.toString()} ${prevVal} ${newVal}`),
+      (key, val) => calls.push(`Get ${key.toString()} ${val}`)
+    );
+
+    data.name = 'uxui';
+    data.name = `${data.name} framework`;
+    expect(calls).toEqual([
+      'Set name undefined uxui',
+      'Get name uxui',
+      'Set name uxui uxui framework'
+    ]);
+
+    calls = [];
+    data = proxyObject({});
+    data.name = 'uxui';
+    data.name = `${data.name} framework`;
+    expect(calls).toEqual([]);
   });
 });

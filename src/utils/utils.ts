@@ -1,11 +1,12 @@
 import { BaseError, NullObjectError } from '../errors';
+import { JsonObjectType } from '../types';
 
 /**
  * Return same object if not null. Otherwise throw error.
  * @param object
  * @param errorObjectSupplier
  */
-export const nonNull = <T, R extends BaseError>(
+export const nonNull = <T, R extends BaseError> (
   object: T, errorObjectSupplier?: () => R): NonNullable<T> => {
   if (object !== undefined && object !== null) {
     return object as NonNullable<T>;
@@ -20,7 +21,7 @@ export const nonNull = <T, R extends BaseError>(
  * If string form of number parse to number or get toString value.
  * @param object
  */
-export const toNumOrStr = <T>(object: T): string | number => {
+export const toNumOrStr = <T> (object: T): string | number => {
   if (isNaN(object as any) || typeof object === 'boolean') {
     return (object as any).toString();
   } else {
@@ -67,7 +68,7 @@ export const includesI = (collection: (string | null | undefined)[], searchStrin
  * @param key
  * @param defaultValue
  */
-export const getOrSetDefault = <T, K>(map: Map<T, K>, key: T, defaultValue: K): K => {
+export const getOrSetDefault = <T, K> (map: Map<T, K>, key: T, defaultValue: K): K => {
   const value = map.get(key);
   if (value) return value;
   map.set(key, defaultValue);
@@ -80,8 +81,34 @@ export const getOrSetDefault = <T, K>(map: Map<T, K>, key: T, defaultValue: K): 
  * @param key
  * @param onNotExist
  */
-export const getOrCall = <T, K, R>(map: Map<T, K>, key: T, onNotExist: () => R): K | R => {
+export const getOrCall = <T, K, R> (map: Map<T, K>, key: T, onNotExist: () => R): K | R => {
   const value = map.get(key);
   if (value) return value;
   return onNotExist();
+};
+
+/**
+ * Returns the proxy of given object with getter and setter.
+ * @param object
+ * @param onSet
+ * @param onGet
+ */
+export const proxyObject = (
+  object: JsonObjectType,
+  onSet?: (key: PropertyKey, prevVal: any, newVal: any) => void,
+  onGet?: (key: PropertyKey, val: any) => void
+): JsonObjectType => {
+  return new Proxy(object, {
+    get: (target, key, receiver) => {
+      const val = Reflect.get(target, key, receiver);
+      if (onGet) onGet(key, val);
+      return val;
+    },
+    set: (target, key, value, receiver): boolean => {
+      const currValue = target[key as string];
+      if (onSet) onSet(key as string, currValue, value);
+      Reflect.set(target, key, value, receiver);
+      return true;
+    }
+  });
 };
