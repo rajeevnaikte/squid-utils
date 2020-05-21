@@ -95,18 +95,18 @@ export const getOrCall = <T, K, R> (map: Map<T, K>, key: T, onNotExist: () => R)
  */
 export const proxyObject = (
   object: JsonObjectType,
-  onSet?: (key: PropertyKey, prevVal: any, newVal: any) => void,
-  onGet?: (key: PropertyKey, val: any) => void
+  onSet?: (key: PropertyKey, prevVal: any, newVal: any) => any,
+  onGet?: (key: PropertyKey, val: any) => any
 ): JsonObjectType => {
   return new Proxy(object, {
     get: (target, key, receiver) => {
-      const val = Reflect.get(target, key, receiver);
-      if (onGet) onGet(key, val);
+      let val = Reflect.get(target, key, receiver);
+      if (onGet) val = onGet(key, val) ?? val;
       return val;
     },
     set: (target, key, value, receiver): boolean => {
       const currValue = target[key as string];
-      if (onSet) onSet(key as string, currValue, value);
+      if (onSet) value = onSet(key as string, currValue, value) ?? value;
       Reflect.set(target, key, value, receiver);
       return true;
     }

@@ -71,8 +71,12 @@ describe('Utility', () => {
     let calls: string[] = [];
     let data = proxyObject(
       {},
-      (key, prevVal, newVal) => calls.push(`Set ${key.toString()} ${prevVal} ${newVal}`),
-      (key, val) => calls.push(`Get ${key.toString()} ${val}`)
+      (key, prevVal, newVal) => {
+        calls.push(`Set ${key.toString()} ${prevVal} ${newVal}`);
+      },
+      (key, val) => {
+        calls.push(`Get ${key.toString()} ${val}`)
+      }
     );
 
     data.name = 'uxui';
@@ -88,5 +92,18 @@ describe('Utility', () => {
     data.name = 'uxui';
     data.name = `${data.name} framework`;
     expect(calls).toEqual([]);
+
+    data = proxyObject(
+      {},
+      (key, prevVal, newVal) => {
+        return newVal + 1;
+      },
+      (key, val) => {
+        return val + 1;
+      }
+    );
+
+    data.name = 1;
+    expect(data.name).toEqual(3);
   });
 });
