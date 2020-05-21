@@ -1,5 +1,11 @@
-export const emptyVoidFn = () => undefined;
+export const noOpNoReturn = () => undefined;
 
-export const emptyStringFn = () => '';
+export const noOpReturnString = () => '';
 
-export const emptyNumberFn = () => 0;
+export const noOpReturnNum = () => 0;
+
+export const noOpReturnArray = () => [];
+
+export const noOpReturnObject = () => {
+  return {};
+};
