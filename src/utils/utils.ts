@@ -1,5 +1,4 @@
 import { BaseError, NullObjectError } from '../errors';
-import { JsonObjectType } from '../types';
 
 /**
  * Return same object if not null. Otherwise throw error.
@@ -97,7 +96,7 @@ export const proxyObject = (
   object: { [key: string]: any },
   onSet?: (key: PropertyKey, prevVal: any, newVal: any) => any,
   onGet?: (key: PropertyKey, val: any) => any
-): JsonObjectType => {
+): { [key: string]: any } => {
   return new Proxy(object, {
     get: (target, key, receiver) => {
       let val = Reflect.get(target, key, receiver);
