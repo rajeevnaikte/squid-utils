@@ -93,9 +93,11 @@ describe('Utility', () => {
     data.name = `${data.name} framework`;
     expect(calls).toEqual([]);
 
+    calls = [];
     data = proxyObject(
       {},
       (key, prevVal, newVal) => {
+        calls.push(data[key]);
         return newVal + 1;
       },
       (key, val) => {
@@ -103,7 +105,8 @@ describe('Utility', () => {
       }
     );
 
-    data.name = 1;
+    data['name'] = 1;
     expect(data.name).toEqual(3);
+    expect(calls).toEqual([2]);
   });
 });

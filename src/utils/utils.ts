@@ -105,8 +105,9 @@ export const proxyObject = (
     },
     set: (target, key, value, receiver): boolean => {
       const currValue = target[key as string];
-      if (onSet) value = onSet(key as string, currValue, value) ?? value;
       Reflect.set(target, key, value, receiver);
+      if (onSet) value = onSet(key as string, currValue, value);
+      if (value) Reflect.set(target, key, value, receiver);
       return true;
     }
   });
