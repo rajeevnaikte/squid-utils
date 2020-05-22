@@ -94,7 +94,7 @@ export const getOrCall = <T, K, R> (map: Map<T, K>, key: T, onNotExist: () => R)
  * @param onGet
  */
 export const proxyObject = (
-  object: JsonObjectType,
+  object: { [key: string]: any },
   onSet?: (key: PropertyKey, prevVal: any, newVal: any) => any,
   onGet?: (key: PropertyKey, val: any) => any
 ): JsonObjectType => {
