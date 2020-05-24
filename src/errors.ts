@@ -40,3 +40,9 @@ export class NestedTextsBetweenNotAllowed extends BaseError {
     super('NESTED_TEXTS_BETWEEN_NOT_ALLOWED', `Nested not allowed when start and end are same.`);
   }
 }
+
+export class UnsupportedOperation extends BaseError {
+  constructor (opName: string) {
+    super('UNSUPPORTED_OP', `Attempt to call unsupported operation '${opName}'.`);
+  }
+}
