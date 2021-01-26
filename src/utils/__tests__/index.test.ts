@@ -1,8 +1,7 @@
 import { getOrCall, getOrSetDefault, includesI, keys, nonNull, proxyObject, toNumOrStr, values } from '../utils';
 import { BaseError, NullObjectError } from '../../errors';
-import * as _ from '../../index';
 
-_;
+nonNull(undefined, () => new BaseError('', ''));
 
 describe('Utility', () => {
   test('nonNull', () => {
