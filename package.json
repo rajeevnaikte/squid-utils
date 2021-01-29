@@ -29,7 +29,8 @@
   },
   "homepage": "https://github.com/rajeevnaikte/squid-utils#readme",
   "dependencies": {
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "type-fest": "^0.20.2"
   },
   "devDependencies": {
     "@types/jest": "^25.1.2",

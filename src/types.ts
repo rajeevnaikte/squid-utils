@@ -1,11 +1,9 @@
-export type Primitive = string | number | boolean | symbol | null | undefined
+import { JsonArray, JsonObject, JsonValue } from 'type-fest';
 
 export type NonNullPrimitive = string | number | boolean | symbol
 
-export type JsonObjectType = {
-  [key: string]: JsonType | Primitive | (JsonType | NonNullPrimitive)[];
-}
+export type JsonObjectType = JsonObject;
 
-export type JsonArrayType = (JsonType | NonNullPrimitive)[]
+export type JsonArrayType = JsonArray;
 
-export type JsonType = JsonObjectType | JsonArrayType
+export type JsonType = JsonValue;
