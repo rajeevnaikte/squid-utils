@@ -1,8 +1,6 @@
 import { getOrCall, getOrSetDefault, includesI, keys, nonNull, proxyObject, toNumOrStr, values } from '../utils';
 import { BaseError, NullObjectError } from '../../errors';
 
-nonNull(undefined, () => new BaseError('', ''));
-
 describe('Utility', () => {
   test('nonNull', () => {
     expect(() => nonNull(null)).toThrow(new NullObjectError());

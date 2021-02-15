@@ -12,7 +12,8 @@
     "lint:fix": "eslint 'src/**/*.{ts,js}' --fix",
     "test": "jest",
     "build": "tsc",
-    "prepublish": "tsc"
+    "prepublish": "tsc",
+    "go-live": "npm update && git add . && git commit && npm version patch && git push && npm publish"
   },
   "repository": {
     "type": "git",
@@ -29,19 +30,19 @@
   },
   "homepage": "https://github.com/rajeevnaikte/squid-utils#readme",
   "dependencies": {
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "type-fest": "^0.20.2"
   },
   "devDependencies": {
-    "@types/jest": "^25.1.2",
-    "@types/json2csv": "^5.0.0",
-    "@types/lodash": "^4.14.149",
-    "@typescript-eslint/eslint-plugin": "^2.25.0",
-    "@typescript-eslint/parser": "^2.25.0",
+    "@types/jest": "^25.2.3",
+    "@types/json2csv": "^5.0.1",
+    "@types/lodash": "^4.14.168",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
+    "@typescript-eslint/parser": "^2.34.0",
     "eslint": "^6.8.0",
-    "jest": "^25.1.0",
-    "ts-jest": "^25.2.0",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.7.5"
+    "jest": "^25.5.4",
+    "ts-jest": "^25.5.1",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.9"
   }
 }

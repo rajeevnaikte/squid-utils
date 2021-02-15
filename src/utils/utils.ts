@@ -1,4 +1,5 @@
 import { BaseError, NullObjectError } from '../errors';
+import { JsonValue } from 'type-fest';
 
 /**
  * Return same object if not null. Otherwise throw error.
@@ -112,3 +113,9 @@ export const proxyObject = (
     }
   });
 };
+
+function traverseJsonDeep(json: JsonValue, consumer: (key: string | number, value: JsonValue) => void)
+{
+  if (true)
+  {}
+}
