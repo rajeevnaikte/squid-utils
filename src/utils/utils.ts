@@ -1,5 +1,6 @@
 import { BaseError, NullObjectError } from '../errors';
-import { JsonValue } from 'type-fest';
+import { JsonArray, JsonObject, JsonValue } from 'type-fest';
+import { isArray, isObjectLike } from 'lodash';
 
 /**
  * Return same object if not null. Otherwise throw error.
@@ -114,8 +115,45 @@ export const proxyObject = (
   });
 };
 
-function traverseJsonDeep(json: JsonValue, consumer: (key: string | number, value: JsonValue) => void)
+/**
+ * Traverse deep the object keeping track fo key path so far.
+ * Invokes the consumer with key, value and fullKeyPath at every path.
+ * @param object
+ * @param consumer
+ * @param parentKey
+ */
+export function traverseJsonDeep<Data>(
+  object: Data,
+  consumer: (
+    key: string | number, value: JsonValue, fullKeyPath: string, object: JsonObject | JsonArray
+  ) => any,
+  parentKey?: string,
+): void
 {
-  if (true)
-  {}
+  if (isArray(object))
+  {
+    object.forEach((item, i) =>
+    {
+      const fullKeyPath = parentKey ? `${parentKey}[${i}]` : `[${i}]`;
+
+      if (consumer(i, item, fullKeyPath, object) !== false)
+      {
+        traverseJsonDeep(item, consumer, fullKeyPath);
+      }
+    });
+  }
+  else if (isObjectLike(object))
+  {
+    const jsonObject = object as JsonObject;
+    Object.keys(jsonObject).forEach((key) =>
+    {
+      const value = jsonObject[key] as JsonValue;
+      const fullKeyPath = parentKey ? `${parentKey}.${key}` : key;
+
+      if (consumer(key, value, fullKeyPath, object) !== false)
+      {
+        traverseJsonDeep(value, consumer, fullKeyPath);
+      }
+    });
+  }
 }
