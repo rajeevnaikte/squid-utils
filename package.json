@@ -21,7 +21,8 @@
   },
   "keywords": [
     "utils",
-    "lodash"
+    "lodash",
+    "types"
   ],
   "author": "Rajeev N",
   "license": "MIT",
@@ -30,19 +31,19 @@
   },
   "homepage": "https://github.com/rajeevnaikte/squid-utils#readme",
   "dependencies": {
-    "lodash": "^4.17.20",
-    "type-fest": "^0.20.2"
+    "lodash": "^4.17.21",
+    "type-fest": "^2.9.0"
   },
   "devDependencies": {
-    "@types/jest": "^25.2.3",
+    "@types/jest": "*",
     "@types/json2csv": "^5.0.1",
-    "@types/lodash": "^4.14.168",
-    "@typescript-eslint/eslint-plugin": "^2.34.0",
-    "@typescript-eslint/parser": "^2.34.0",
-    "eslint": "^6.8.0",
-    "jest": "^25.5.4",
-    "ts-jest": "^25.5.1",
-    "ts-node": "^8.10.2",
-    "typescript": "^3.9.9"
+    "@types/lodash": "^4.14.178",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*",
+    "eslint": "*",
+    "jest": "*",
+    "ts-jest": "*",
+    "ts-node": "*",
+    "typescript": "*"
   }
 }
