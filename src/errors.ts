@@ -1,12 +1,14 @@
 /**
  * Base error object containing keys - code, message.
  */
-export class BaseError extends Error {
+export class BaseError<T = undefined> extends Error {
   readonly code: string;
+  readonly details?: T;
 
-  constructor (code: string, message: string) {
+  constructor (code: string, message: string, details?: T) {
     super(message);
     this.code = code;
+    this.details = details;
   }
 
   toString (): string {
