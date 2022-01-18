@@ -5,6 +5,7 @@ module.exports =  {
   ],
   parserOptions:  {
     sourceType:  'module',  // Allows for the use of imports
+    project: './tsconfig.eslint.json'
   },
   rules:  {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs

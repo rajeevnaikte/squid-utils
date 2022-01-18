@@ -6,9 +6,8 @@ import {
   nonNull,
   proxyObject,
   toNumOrStr,
-  traverseJsonDeep,
   values
-} from '../../index';
+} from '../..';
 import { BaseError, NullObjectError } from '../../errors';
 
 describe('Utility', () => {
@@ -115,60 +114,5 @@ describe('Utility', () => {
     data['name'] = 1;
     expect(data.name).toEqual(3);
     expect(calls).toEqual([2]);
-  });
-
-  describe('traverseDeepWithFullKeyPath', () =>
-  {
-    test('map data with arrays', () =>
-    {
-      const keyPaths: string[] = [];
-      traverseJsonDeep({
-        test: {
-          success: true,
-        },
-        array: [
-          'string',
-          {
-            item: 1,
-          },
-        ],
-        string: null,
-      }, (key, value, fullKeyPath) => keyPaths.push(fullKeyPath));
-
-      expect(keyPaths).toEqual([
-        'test',
-        'test.success',
-        'array',
-        'array[0]',
-        'array[1]',
-        'array[1].item',
-        'string',
-      ]);
-    });
-
-    test('array data with nested maps', () =>
-    {
-      const keyPaths: string[] = [];
-      traverseJsonDeep([
-        'string',
-        {
-          item: 1,
-        },
-      ], (key, value, fullKeyPath) => keyPaths.push(fullKeyPath));
-
-      expect(keyPaths).toEqual([
-        '[0]',
-        '[1]',
-        '[1].item',
-      ]);
-    });
-
-    test('string input', () =>
-    {
-      const keyPaths: string[] = [];
-      traverseJsonDeep('string', (key, value, fullKeyPath) => keyPaths.push(fullKeyPath));
-
-      expect(keyPaths).toEqual([]);
-    });
   });
 });

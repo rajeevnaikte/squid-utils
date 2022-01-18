@@ -6,6 +6,4 @@ export const noOpReturnNum = () => 0;
 
 export const noOpReturnArray = () => [];
 
-export const noOpReturnObject = () => {
-  return {};
-};
+export const noOpReturnObject = () => ({});
